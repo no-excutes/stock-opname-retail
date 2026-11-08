@@ -43,6 +43,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
   );
 
   bool _isProcessing = false;
+  bool _isTorchOn = false;
   Product? _lastScannedProduct;
   int _lastScannedQty = 1;
 
@@ -52,7 +53,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
     super.dispose();
   }
 
-  // Tangani barcode yang tertangkap oleh kamera
   Future<void> _onBarcodeDetected(BarcodeCapture capture) async {
     if (_isProcessing) return;
     final barcodes = capture.barcodes;
@@ -62,13 +62,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
     if (code == null || code.trim().isEmpty) return;
 
     setState(() => _isProcessing = true);
-    HapticFeedback.mediumImpact(); // Getar tanda scan sukses
+    HapticFeedback.mediumImpact();
 
     await _processCode(code.trim());
   }
 
   Future<void> _processCode(String code) async {
-    // 1. Cari produk di database lokal
     Product? product = await DbHelper.instance.findProduct(code);
 
     if (!mounted) return;
@@ -84,7 +83,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
       return;
     }
 
-    // 2. Tampilkan dialog konfirmasi kuantitas hitung
     _showQtyDialog(product);
   }
 
@@ -213,13 +211,11 @@ class _ScannerScreenState extends State<ScannerScreen> {
         backgroundColor: widget.isEvaluasi ? Colors.orange[800] : Colors.blue[800],
         actions: [
           IconButton(
-            icon: ValueListenableBuilder<TorchState>(
-              valueListenable: _controller.torchState,
-              builder: (context, state, child) {
-                return Icon(state == TorchState.on ? Icons.flash_on : Icons.flash_off);
-              },
-            ),
-            onPressed: () => _controller.toggleTorch(),
+            icon: Icon(_isTorchOn ? Icons.flash_on : Icons.flash_off),
+            onPressed: () {
+              _controller.toggleTorch();
+              setState(() => _isTorchOn = !_isTorchOn);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.keyboard),
@@ -230,13 +226,10 @@ class _ScannerScreenState extends State<ScannerScreen> {
       ),
       body: Stack(
         children: [
-          // 1. Kamera Scanner View
           MobileScanner(
             controller: _controller,
             onDetect: _onBarcodeDetected,
           ),
-
-          // 2. Viewfinder Overlay (Kotak bidik kamera)
           Center(
             child: Container(
               width: 280,
@@ -247,8 +240,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
               ),
             ),
           ),
-
-          // 3. Info Panel Atas (Lokasi & Petugas)
           Positioned(
             top: 16,
             left: 16,
@@ -274,8 +265,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
               ),
             ),
           ),
-
-          // 4. Panel Hasil Scan Terakhir di Bawah
           if (_lastScannedProduct != null)
             Positioned(
               bottom: 24,
