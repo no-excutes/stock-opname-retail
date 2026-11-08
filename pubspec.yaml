@@ -16,7 +16,6 @@ dependencies:
   excel: ^4.0.6               # Membaca & membuat file .xlsx secara mandiri di HP
   share_plus: ^10.0.0         # Fitur berbagi file via WhatsApp, Gmail, Bluetooth, dll.
   intl: ^0.19.0               # Formatting tanggal dan jam (SOTGL, SOTIME)
-  fluttertoast: ^8.2.8        # Notifikasi toast cepat saat scan berhasil
 
 dev_dependencies:
   flutter_test:

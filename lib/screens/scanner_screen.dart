@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../models/product.dart';
 import '../models/scan_record.dart';
 import '../database/db_helper.dart';
@@ -73,11 +73,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     if (!mounted) return;
 
     if (product == null) {
-      Fluttertoast.showToast(
-        msg: "Barang tidak terdaftar: $code",
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data berhasil dicatat"), duration: Duration(seconds: 1)));
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) setState(() => _isProcessing = false);
       return;

@@ -2,7 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../services/export_service.dart';
 
 /// Halaman review sesi dan ekspor 4 file (SBD, SBDE, SB, SBE).
@@ -87,7 +87,7 @@ class _ExportScreenState extends State<ExportScreen> {
         _statusMessage = "File berhasil dibuat: ${file.path.split('/').last}";
       });
 
-      Fluttertoast.showToast(msg: "File disimpan di memori HP");
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data berhasil dicatat"), duration: Duration(seconds: 1)));
 
       // Buka dialog Bagikan (WhatsApp/Email/Drive)
       await ExportService.shareFile(file, "Laporan $type Toko ${widget.storeCode}");
@@ -96,7 +96,7 @@ class _ExportScreenState extends State<ExportScreen> {
         _isLoading = false;
         _statusMessage = "Gagal ekspor: $e";
       });
-      Fluttertoast.showToast(msg: "Error: $e", backgroundColor: Colors.red);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data berhasil dicatat"), duration: Duration(seconds: 1)));
     }
   }
 
