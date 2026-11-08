@@ -30,7 +30,7 @@ class ExportService {
           TextCellValue(scans[i].toSbdLine());
     }
 
-    final filename = 'SBD${yymmdd}${storeCode}.xlsx';
+    final filename = 'SBD$yymmdd$storeCode.xlsx';
     return await _saveExcel(excel, filename);
   }
 
@@ -54,7 +54,7 @@ class ExportService {
           TextCellValue(scans[i].toSbdeLine());
     }
 
-    final filename = 'SBDE${yymmdd}${storeCode}.xlsx';
+    final filename = 'SBDE$yymmdd$storeCode.xlsx';
     return await _saveExcel(excel, filename);
   }
 
@@ -95,7 +95,7 @@ class ExportService {
       rowIndex++;
     }
 
-    final filename = 'SB${yymmdd}${storeCode}.xlsx';
+    final filename = 'SB$yymmdd$storeCode.xlsx';
     return await _saveExcel(excel, filename);
   }
 
@@ -137,7 +137,7 @@ class ExportService {
       }
     }
 
-    final filename = 'SBE${yymmdd}${storeCode}.xlsx';
+    final filename = 'SBE$yymmdd$storeCode.xlsx';
     return await _saveExcel(excel, filename);
   }
 

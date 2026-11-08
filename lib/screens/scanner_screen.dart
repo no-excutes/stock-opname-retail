@@ -1,26 +1,23 @@
-// lib/screens/scanner_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:intl/intl.dart';
-
 import '../models/product.dart';
 import '../models/scan_record.dart';
 import '../database/db_helper.dart';
 
-/// Halaman pemindai barcode menggunakan kamera HP bawaan.
 class ScannerScreen extends StatefulWidget {
   final String sessionId;
   final String storeCode;
   final String nik;
   final String nama;
-  final int lokasi; // 1: Toko, 2: Gudang
+  final int lokasi;
   final bool isEvaluasi;
   final String? nikShift;
   final String? namaShift;
 
   const ScannerScreen({
-    Key? key,
+    super.key,
     required this.sessionId,
     required this.storeCode,
     required this.nik,
@@ -29,7 +26,7 @@ class ScannerScreen extends StatefulWidget {
     this.isEvaluasi = false,
     this.nikShift,
     this.namaShift,
-  }) : super(key: key);
+  });
 
   @override
   State<ScannerScreen> createState() => _ScannerScreenState();
@@ -73,7 +70,13 @@ class _ScannerScreenState extends State<ScannerScreen> {
     if (!mounted) return;
 
     if (product == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data berhasil dicatat"), duration: Duration(seconds: 1)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Barang tidak terdaftar: $code"),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 2),
+        ),
+      );
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) setState(() => _isProcessing = false);
       return;
@@ -152,15 +155,20 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
     await DbHelper.instance.insertScan(record);
 
+    if (!mounted) return;
+
     setState(() {
       _lastScannedProduct = product;
       _lastScannedQty = qty;
       _isProcessing = false;
     });
 
-      msg: "Berhasil catat: ${product.singkat} ($qty)",
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Berhasil catat: ${product.singkat} ($qty)"),
+        backgroundColor: Colors.green,
+        duration: const Duration(milliseconds: 1500),
+      ),
     );
   }
 
