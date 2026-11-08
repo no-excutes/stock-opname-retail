@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.retail.stock_opname_app"
-    compileSdk = 36
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId = "com.retail.stock_opname_app"
         minSdk = 21
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
         multiDexEnabled = true
@@ -38,11 +38,4 @@ android {
 
 flutter {
     source = "../.."
-}
-
-// Matikan tugas CheckAarMetadata agar Gradle tidak pernah memblokir build lagi
-tasks.whenTaskAdded { task ->
-    if (task.name.toLowerCase().contains("aarmetadata")) {
-        task.enabled = false
-    }
 }
