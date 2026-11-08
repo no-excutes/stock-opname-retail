@@ -158,7 +158,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
       _isProcessing = false;
     });
 
-    Fluttertoast.showToast(
       msg: "Berhasil catat: ${product.singkat} ($qty)",
       backgroundColor: Colors.green,
       textColor: Colors.white,
