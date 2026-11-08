@@ -9,13 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mobile_scanner: ^5.2.3      # Scanner kamera berkecepatan tinggi berbasis Google ML Kit
-  sqflite: ^2.3.3+1           # Database lokal SQLite offline-first di smartphone
-  path: ^1.9.0                # Manajemen path direktori database
-  path_provider: ^2.1.3       # Mengakses folder Documents & Downloads di Android
-  excel: ^4.0.6               # Membaca & membuat file .xlsx secara mandiri di HP
-  share_plus: ^10.0.0         # Fitur berbagi file via WhatsApp, Gmail, Bluetooth, dll.
-  intl: ^0.19.0               # Formatting tanggal dan jam (SOTGL, SOTIME)
+  mobile_scanner: ^5.2.3
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
+  path_provider: ^2.1.3
+  excel: ^4.0.6
+  share_plus: ^10.0.0
+  intl: ^0.19.0
+  file_picker: ^8.1.4
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/master_sb.txt
